@@ -115,7 +115,7 @@ body {
 }
 
 
-/* --- Step 3 & 4: Storybook --- */
+/* --- Step 3 & 4: Storybook (FIX APPLIED HERE) --- */
 .storybook-container { perspective: 1500px; }
 .book {
     width: 400px;
@@ -135,7 +135,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    transform-style: preserve-3d;
+    transform-style: preserve-3d; /* Apply to all 3D objects */
 }
 
 .book-cover {
@@ -149,7 +149,7 @@ body {
     position: absolute;
     background-color: var(--book-cover-color);
     border-radius: 5px;
-    backface-visibility: hidden;
+    backface-visibility: hidden; /* Hide when facing away */
 }
 .cover-front {
     display: flex;
@@ -165,7 +165,9 @@ body {
     padding: 10px 20px;
     border-radius: 5px;
 }
-.cover-back { transform: rotateY(180deg); }
+.cover-back {
+    transform: rotateY(180deg); /* Pre-flip the back */
+}
 .storybook-container.open .book-cover { transform: rotateY(-180deg); }
 
 .page {
@@ -173,27 +175,38 @@ body {
     transition: transform 1.2s ease-in-out;
     background-color: var(--book-page-color);
     border-radius: 0 5px 5px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     box-shadow: inset -1px 0 2px rgba(0,0,0,0.1);
 }
 #page1 { z-index: 8; }
 #page2 { z-index: 7; }
+
 .page-front, .page-back {
     position: absolute;
     width: 100%;
     height: 100%;
     padding: 20px;
-    backface-visibility: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--book-page-color); /* Ensure background is set here */
+    border-radius: 0 5px 5px 0;
+    backface-visibility: hidden; /* **FIX**: Hide when facing away */
 }
-.page-back { transform: rotateY(180deg); }
-.page-text { font-family: 'Playfair Display', serif; font-size: 1.5rem; text-align: center; }
 
-.page.flipped { transform: rotateY(-180deg); }
+.page-back {
+    transform: rotateY(180deg); /* **FIX**: Pre-flip the back of the page */
+}
+
+.page-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.page.flipped {
+    transform: rotateY(-180deg); /* The main flipping animation */
+}
+
 
 /* --- Step 5: Finale --- */
 .finale-container {
