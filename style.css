@@ -1,0 +1,279 @@
+/* --- Global Styles & Setup --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito+Sans:wght@400;600&display=swap');
+
+:root {
+    --bg-color-1: #e0c3fc;
+    --bg-color-2: #8ec5fc;
+    --bg-color-3: #f0c3fc;
+    --bg-color-4: #c3e8fc;
+    --text-dark: #333;
+    --text-light: #fff;
+    --accent-gold: #FFD700;
+    --accent-deep-purple: #5a189a;
+    --book-cover-color: #7b2cbf;
+    --book-page-color: #f8f7f2;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    color: var(--text-dark);
+}
+
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2), var(--bg-color-3), var(--bg-color-4));
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.step {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.step.active { display: flex; opacity: 1; }
+
+.instruction-text {
+    margin-top: 25px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-shadow: 1px 1px 3px var(--shadow-color);
+    animation: fadeIn 1s 0.5s both;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+
+/* --- Step 1: Gift Box --- */
+.gift-container { text-align: center; cursor: pointer; }
+.gift-box { position: relative; width: 150px; height: 150px; background-color: var(--accent-deep-purple); border-radius: 12px; }
+.gift-lid {
+    position: absolute;
+    width: 170px;
+    height: 40px;
+    background-color: #9d4edd;
+    top: -20px;
+    left: -10px;
+    border-radius: 8px;
+    transition: transform 0.5s ease-out;
+}
+.gift-bow::before, .gift-bow::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 60px;
+    background-color: var(--accent-gold);
+    border-radius: 50%;
+    top: -45px;
+    z-index: 10;
+}
+.gift-bow::before { left: 55px; transform: rotate(-45deg); }
+.gift-bow::after { left: 80px; transform: rotate(45deg); }
+.gift-container.open .gift-lid { transform: translateY(-80px) rotate(15deg); }
+
+/* --- Step 2: Key --- */
+.key-container { text-align: center; }
+.key-svg { width: 150px; height: 150px; stroke: var(--accent-gold); filter: drop-shadow(0 0 10px gold); }
+#animatedKey {
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    animation: drawKey 2s ease-out forwards;
+    transition: transform 0.5s ease-in-out;
+}
+@keyframes drawKey { to { stroke-dashoffset: 0; } }
+.key-container.unlocking #animatedKey {
+    transform: translateY(100px) scale(0.2) rotate(-90deg);
+    opacity: 0;
+}
+
+
+/* --- Step 3 & 4: Storybook --- */
+.storybook-container { perspective: 1500px; }
+.book {
+    width: 400px;
+    height: 300px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s ease-in-out;
+    opacity: 0;
+    transform: rotateY(-30deg) scale(0.5);
+}
+.storybook-container.visible .book { opacity: 1; transform: rotateY(-30deg) scale(1); }
+.storybook-container.opening .book { transform: rotateY(0deg) scale(1.2); }
+
+.book-cover, .page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-style: preserve-3d;
+}
+
+.book-cover {
+    transform-origin: left;
+    transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 10;
+}
+.cover-front, .cover-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: var(--book-cover-color);
+    border-radius: 5px;
+    backface-visibility: hidden;
+}
+.cover-front {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 20px var(--shadow-color);
+}
+.book-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-gold);
+    font-size: 2.5rem;
+    border: 2px solid var(--accent-gold);
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+.cover-back { transform: rotateY(180deg); }
+.storybook-container.open .book-cover { transform: rotateY(-180deg); }
+
+.page {
+    transform-origin: left;
+    transition: transform 1.2s ease-in-out;
+    background-color: var(--book-page-color);
+    border-radius: 0 5px 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset -1px 0 2px rgba(0,0,0,0.1);
+}
+#page1 { z-index: 8; }
+#page2 { z-index: 7; }
+.page-front, .page-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.page-back { transform: rotateY(180deg); }
+.page-text { font-family: 'Playfair Display', serif; font-size: 1.5rem; text-align: center; }
+
+.page.flipped { transform: rotateY(-180deg); }
+
+/* --- Step 5: Finale --- */
+.finale-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.finale-card {
+    position: relative;
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    width: 90%;
+    max-width: 600px;
+    opacity: 0;
+    animation: fadeIn 1s 1s forwards;
+}
+.finale-greeting {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--accent-deep-purple);
+}
+.finale-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 4rem;
+    color: var(--accent-deep-purple);
+    margin: 10px 0;
+}
+.finale-wish {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-top: 20px;
+}
+
+/* Floral SVG Animation */
+.floral-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: visible;
+}
+.floral-svg path {
+    fill: none;
+    stroke: var(--accent-deep-purple);
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 0.3;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawVines 3s ease-out 1.5s forwards;
+}
+@keyframes drawVines { to { stroke-dashoffset: 0; } }
+
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .book { transform: scale(0.8) rotateY(-30deg); }
+    .storybook-container.opening .book { transform: rotateY(0deg) scale(0.9); }
+    .finale-greeting { font-size: 2rem; }
+    .finale-name { font-size: 3rem; }
+    .finale-wish { font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+    .book { width: 300px; height: 225px; }
+    .book-title { font-size: 1.8rem; }
+    .page-text { font-size: 1.1rem; }
+    .finale-greeting { font-size: 1.8rem; }
+    .finale-name { font-size: 2.5rem; }
+    .finale-wish { font-size: 0.9rem; }
+    .finale-card { padding: 25px; }
+}
