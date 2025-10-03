@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Magical Birthday Story</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-container"></div>
+    <audio id="backgroundMusic" loop src="magical_music.mp3"></audio>
+
+    <div class="step active" id="step1">
+        <div class="gift-container" id="giftContainer">
+            <div class="gift-box">
+                <div class="gift-lid"></div>
+                <div class="gift-bow"></div>
+            </div>
+            <p class="instruction-text">A surprise is waiting...</p>
+        </div>
+    </div>
+
+    <div class="step" id="step2">
+        <div class="key-container" id="keyContainer">
+            <svg id="animatedKey" class="key-svg" viewBox="0 0 100 100">
+                <path d="M60,20 Q50,10 40,20 T20,20 Q10,25 20,30 T40,30 Q50,35 40,40 L40,70 L35,75 L35,80 L40,85 L45,80 L45,75 L40,70" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </svg>
+            <p class="instruction-text">A key to unlock the magic...</p>
+        </div>
+    </div>
+
+    <div class="step" id="step3">
+        <div class="storybook-container" id="storybookContainer">
+            <div class="book">
+                <div class="book-cover" id="bookCover">
+                    <div class="cover-front">
+                        <h2 class="book-title">Your Story</h2>
+                    </div>
+                    <div class="cover-back"></div>
+                </div>
+                <div class="page" id="page1">
+                    <div class="page-front">
+                        <p class="page-text">A new chapter begins today...</p>
+                    </div>
+                    <div class="page-back">
+                        <p class="page-text">Filled with promise and new adventures...</p>
+                    </div>
+                </div>
+                <div class="page" id="page2">
+                    <div class="page-front">
+                        <p class="page-text">May it be your best one yet...</p>
+                    </div>
+                    <div class="page-back">
+                        <p class="page-text">Full of laughter, joy, and light...</p>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="step" id="step5">
+        <div class="finale-container">
+            <div class="finale-card">
+                <svg class="floral-svg" viewBox="0 0 400 400">
+                    <path id="vine1" d="M10,200 C40,100 150,100 200,200 S360,300 390,200" />
+                    <path id="vine2" d="M10,210 C40,310 150,310 200,210 S360,110 390,210" />
+                </svg>
+                <h1 class="finale-greeting">Happy Birthday</h1>
+                <h2 class="finale-name">Sapthesh!</h2>
+                <p class="finale-wish">Wishing you a day as magical as this story, and a year filled with wonderful new beginnings. May all your dreams blossom.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
